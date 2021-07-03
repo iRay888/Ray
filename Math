@@ -152,7 +152,7 @@ end
 function Math.bulletcheck(o, t, p)
     local ve = t - o
     local n = ve.Unit
-    local h, po = Math.raycast(workspace, Ray.new(o, ve), {Service.Workspace.Players, Service.Camera, Service.Workspace.Ignore})
+    local h, po = Math.raycast(workspace, Ray.new(o, ve), {workspace.Players, workspace.Camera, workspace.Ignore})
 
     if p <= 0.01 then
         return false
