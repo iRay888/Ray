@@ -6,13 +6,13 @@ local Math = {
     atan2 = math.atan2,
     cos = math.cos,
     sin = math.sin,
-    err = 1.0E-
+    err = 1.0E-10
 }
 
 local function solve(a, b, c, d, e)
     if not a then
         return
-    elseif a > -err and a < err then
+    elseif a > -Math.err and a < Math.err then
         return solve(b, c, d, e)
     end
     if e then
@@ -22,7 +22,7 @@ local function solve(a, b, c, d, e)
         local r = (16 * a * a * b * b * c + 256 * a * a * a * a * e - 3 * a * b * b * b * b - 64 * a * a * a * b * d) / (256 * a * a * a * a * a)
         local h0, h1, h2 = solve(1, 2 * p, p * p - 4 * r, -q * q)
         local s = h2 or h0
-        if s < err then
+        if s < Math.err then
             local f0, f1 = solve(1, p, r)
             if not f1 or f1 < 0 then
                 return
@@ -33,7 +33,7 @@ local function solve(a, b, c, d, e)
         else
             local h = s ^ 0.5
             local f = (h * h * h + h * p - q) / (2 * h)
-            if f > -err and f < err then
+            if f > -Math.err and f < Math.err then
                 return k - h, k
             else
                 local r0, r1 = solve(1, h, f)
@@ -55,7 +55,7 @@ local function solve(a, b, c, d, e)
         local q = (2 * b * b * b - 9 * a * b * c + 27 * a * a * d) / (54 * a * a * a)
         local r = p * p * p + q * q
         local s = r ^ 0.5 + q
-        if s > -err and s < err then
+        if s > -Math.err and s < Math.err then
             if q < 0 then
                 return k + (-2 * q) ^ 0.3333333333333333
             else
