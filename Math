@@ -172,7 +172,7 @@ function Math.bulletcheck(o, t, p)
             end
         end
 
-        return Math.BulletCheck(po + n / 100, t, p)
+        return Math.bulletcheck(po + n / 100, t, p)
     else
 
         return true
