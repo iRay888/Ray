@@ -15,7 +15,7 @@ local function solve(a, b, c, d, e)
     elseif a > -Math.err and a < Math.err then
         return solve(b, c, d, e)
     end
-    
+
     if e then
         local k = -b / (4 * a)
         local p = (8 * a * c - 3 * b * b) / (8 * a * a)
@@ -142,13 +142,13 @@ function Math.minpos(t)
     end
 end
 
-function Math.timehit(o, v, a, t)
+function Math.timehit(o, ve, a, t)
 	local d = o - t
 	local st = 0
 	local n = (1 / 0)
 
-    for i, v in pairs({solve(Math.dot(a, a), 3 * Math.dot(a, v), 2 * (Math.dot(a, d) + Math.dot(v, v)), 2 * Math.dot(d, v))}) do
-		local m = (d + v * v + v * v / 2 * a).magnitude
+    for i, v in pairs({solve(Math.dot(a, a), 3 * Math.dot(a, ve), 2 * (Math.dot(a, d) + Math.dot(ve, ve)), 2 * Math.dot(d, ve))}) do
+		local m = (d + v * ve + v * v / 2 * a).magnitude
 
 		if st < v and m < n then
 			st = v
