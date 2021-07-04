@@ -1,6 +1,7 @@
 local Math = {
     raycast = workspace.FindPartOnRayWithIgnoreList,
     wraycast = workspace.FindPartOnRayWithWhitelist,
+    tau = 2 * 3.141592653589793,
     ldt = 0.016666666666666666,
     dot = Vector3.new().Dot,
     pi = 3.141592653589793,
@@ -9,8 +10,7 @@ local Math = {
     asin = math.asin,
     cos = math.cos,
     sin = math.sin,
-    err = 1.0E-10,
-    tau = 2 * pi
+    err = 1.0E-10
 }
 
 local function solve(a, b, c, d, e)
