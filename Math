@@ -179,7 +179,7 @@ function Math.old_trajectory(pp, pv, pa, tp, tv, ta, s)
     local rv = tv - pv
     local ra = ta - pa
 
-    for i, v in pairs({solve(dot(ra, ra) / 4, dot(ra, rv), dot(ra, rp) + dot(rv, rv) - s * s, 2 * dot(rp, rv), dot(rp, rp))}) do
+    for i, v in pairs({solve(Math.dot(ra, ra) / 4, Math.dot(ra, rv), Math.dot(ra, rp) + Math.dot(rv, rv) - s * s, 2 * Math.dot(rp, rv), Math.dot(rp, rp))}) do
         if v and v > 0 then
             return ra * v / 2 + tv + rp / v, v
         end
