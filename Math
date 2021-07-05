@@ -276,7 +276,7 @@ function Math.getpartinfo2(Cframe, Size)
     }
 end
 
-function Math.getposlist3(List)getposlist3
+function Math.getposlist3(List)
     local Positions = {}
     local Top = -math.huge
     local Bottom = math.huge
