@@ -224,4 +224,116 @@ function Math.setlookvector(c, d, dx, dy)
     c.angles = newangles
 end
 
+function Math.wtvp(Pos)
+    local Position = workspace.Camera:WorldToViewportPoint(Vector3.new(Pos.X, Pos.Y, Pos.Z))
+
+    return Vector2.new(Position.X, Position.Y), Position.Z
+end
+
+function Math.getpartends(Cframe, Size)
+    return Math.wtvp((Cframe * CFrame.new(Vector3.new(0, Size.Y / 2, 0))).Position), Math.wtvp((Cframe * CFrame.new(Vector3.new(0, -Size.Y / 2, 0))).Position)
+end
+
+function Math.getpartinfo3(Cframe, Size)
+    local Positions = {}
+    local Top = Size.Y / 2
+    local Bottom = -Size.Y / 2
+    local Front = -Size.Z / 2
+    local Back = Size.Z / 2
+    local Left = -Size.X / 2
+    local Right = Size.X / 2
+
+    return {
+        LeftTopFront = (Cframe * CFrame.new(Vector3.new(Left, Top, Front))).Position,
+        RightTopFront = (Cframe * CFrame.new(Vector3.new(Right, Top, Front))).Position,
+        LeftBottomFront = (Cframe * CFrame.new(Vector3.new(Left, Bottom, Front))).Position,
+        RightBottomFront = (Cframe * CFrame.new(Vector3.new(Right, Bottom, Front))).Position,
+        LeftTopBack = (Cframe * CFrame.new(Vector3.new(Left, Top, Back))).Position,
+        RightTopBack = (Cframe * CFrame.new(Vector3.new(Right, Top, Back))).Position,
+        LeftBottomBack = (Cframe * CFrame.new(Vector3.new(Left, Bottom, Back))).Position,
+        RightBottomBack = (Cframe * CFrame.new(Vector3.new(Right, Bottom, Back))).Position
+    }
+end
+
+function Math.getpartinfo2(Cframe, Size)
+    local Positions = {}
+    local Top = Size.Y / 2
+    local Bottom = -Size.Y / 2
+    local Front = -Size.Z / 2
+    local Back = Size.Z / 2
+    local Left = -Size.X / 2
+    local Right = Size.X / 2
+
+    return {
+        LeftTopFront = Math.wtvp((Cframe * CFrame.new(Vector3.new(Left, Top, Front))).Position),
+        RightTopFront = Math.wtvp((Cframe * CFrame.new(Vector3.new(Right, Top, Front))).Position),
+        LeftBottomFront = Math.wtvp((Cframe * CFrame.new(Vector3.new(Left, Bottom, Front))).Position),
+        RightBottomFront = Math.wtvp((Cframe * CFrame.new(Vector3.new(Right, Bottom, Front))).Position),
+        LeftTopBack = Math.wtvp((Cframe * CFrame.new(Vector3.new(Left, Top, Back))).Position),
+        RightTopBack = Math.wtvp((Cframe * CFrame.new(Vector3.new(Right, Top, Back))).Position),
+        LeftBottomBack = Math.wtvp((Cframe * CFrame.new(Vector3.new(Left, Bottom, Back))).Position),
+        RightBottomBack = Math.wtvp((Cframe * CFrame.new(Vector3.new(Right, Bottom, Back))).Position)
+    }
+end
+
+function Math.getposlist3(List)getposlist3
+    local Positions = {}
+    local Top = -math.huge
+    local Bottom = math.huge
+    local Front = math.huge
+    local Back = -math.huge
+    local Left = math.huge
+    local Right = -math.huge
+
+    for i, v in pairs(List) do
+        Top = (v.Y > Top) and v.Y or Top
+        Bottom = (v.Y < Bottom) and v.Y or Bottom
+        Front = (v.Z < Front) and v.Z or Front
+        Back = (v.Z > Back) and v.Z or Back
+        Left = (v.X < Left) and v.X or Left
+        Right = (v.X > Right) and v.X or Right
+    end
+
+    return {
+        LeftTopFront = Math.wtvp(Vector3.new(Left, Top, Front)),
+        RightTopFront = Math.wtvp(Vector3.new(Right, Top, Front)),
+        LeftBottomFront = Math.wtvp(Vector3.new(Left, Bottom, Front)),
+        RightBottomFront = Math.wtvp(Vector3.new(Right, Bottom, Front)),
+        LeftTopBack = Math.wtvp(Vector3.new(Left, Top, Back)),
+        RightTopBack = Math.wtvp(Vector3.new(Right, Top, Back)),
+        LeftBottomBack = Math.wtvp(Vector3.new(Left, Bottom, Back)),
+        RightBottomBack = Math.wtvp(Vector3.new(Right, Bottom, Back))
+    }
+end
+
+function Math.getposlist2(List)
+    local TopY = math.huge
+    local BottomY = -math.huge
+    local RightX = -math.huge
+    local LeftX = math.huge
+
+    for i, v in pairs(List) do
+        TopY = (v.Y < TopY) and v.Y or TopY
+        BottomY = (v.Y > BottomY) and v.Y or BottomY
+        LeftX = (v.X < LeftX) and v.X or LeftX
+        RightX = (v.X > RightX) and v.X or RightX
+    end
+
+    return {
+        Positions = {
+            TopLeft = Vector2.new(LeftX, TopY), 
+            TopRight = Vector2.new(RightX, TopY), 
+            BottomLeft = Vector2.new(LeftX, BottomY), 
+            Middle = Vector2.new((RightX - LeftX) / 2 + LeftX, (BottomY - TopY) / 2 + TopY), 
+            BottomRight = Vector2.new(RightX, BottomY)
+        }, 
+        Quad = {
+            PointB = Vector2.new(LeftX, TopY), 
+            PointA = Vector2.new(RightX, TopY), 
+            PointC = Vector2.new(LeftX, BottomY), 
+            PointD = Vector2.new(RightX, BottomY)
+        }
+    }
+end
+
 return Math
