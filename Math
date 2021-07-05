@@ -152,7 +152,7 @@ function Math.timehit(o, ve, a, t)
 	local n = (1 / 0)
 
     for i, v in pairs({solve(Math.dot(a, a), 3 * Math.dot(a, ve), 2 * (Math.dot(a, d) + Math.dot(ve, ve)), 2 * Math.dot(d, ve))}) do
-		local m = (d + v * ve + v * v / 2 * a).magnitude
+		local m = (d + v * ve + v * v / 2 * a).Magnitude
 
 		if st < v and m < n then
 			st = v
@@ -170,6 +170,18 @@ function Math.trajectory(o, a, t, s)
     for i, v in pairs({solve(Math.dot(b, b) / 4, 0, Math.dot(b, ve) - s * s, 0, Math.dot(ve, ve))}) do
         if v and v > 0 then
             return b * v / 2 + ve / v, v
+        end
+    end
+end
+
+function Math.old_trajectory(pp, pv, pa, tp, tv, ta, s)
+    local rp = tp - pp
+    local rv = tv - pv
+    local ra = ta - pa
+
+    for i, v in pairs({solve(dot(ra, ra) / 4, dot(ra, rv), dot(ra, rp) + dot(rv, rv) - s * s, 2 * dot(rp, rv), dot(rp, rp))}) do
+        if v and v > 0 then
+            return ra * v / 2 + tv + rp / v, v
         end
     end
 end
