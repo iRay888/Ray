@@ -220,22 +220,6 @@ function Math.anglesyx(x, y)
 	return Vector3.new(-cx * Math.sin(y), Math.sin(x), -cx * Math.cos(y))
 end
 
-function Math.setlookvector(c, d, dx, dy)
-    didchange = true
-
-    local x, ay = Math.toanglesyx(d)
-    x = x + (dx or 0)
-    ay = ay + (dy or 0)
-
-    local cy = c.angles.y
-    x = x > c.maxangle and c.maxangle or x < c.minangle and c.minangle or x
-
-    local y = (ay + Math.pi - cy) % Math.tau - Math.pi + cy
-    local newangles = Vector3.new(x, y, 0)
-    c.delta = (newangles - c.angles) / Math.ldt
-    c.angles = newangles
-end
-
 function Math.wtvp(Pos)
     local Position = workspace.Camera:WorldToViewportPoint(Vector3.new(Pos.X, Pos.Y, Pos.Z))
 
