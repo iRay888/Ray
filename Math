@@ -11,7 +11,7 @@ local Math = {
     cos = math.cos,
     sin = math.sin,
     err = 1.0E-10,
-    V3 = Vector3.new()
+    v3 = Vector3.new()
 }
 
 local function solve(a, b, c, d, e)
