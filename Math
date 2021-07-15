@@ -10,7 +10,8 @@ local Math = {
     asin = math.asin,
     cos = math.cos,
     sin = math.sin,
-    err = 1.0E-10
+    err = 1.0E-10,
+    V3 = Vector3.new()
 }
 
 local function solve(a, b, c, d, e)
@@ -197,15 +198,6 @@ function Math.simple_trajectory(s, a, r)
 
         return r / t - t / 2 * a
     end
-end
-
-function Math.raycastSingleExit(o, t, i)
-	local r = RaycastParams.new()
-	r.FilterType = Enum.RaycastFilterType.Whitelist
-	r.FilterDescendantsInstances = {i}
-	r.IgnoreWater = true
-
-	return workspace:Raycast(o + t, -t, r)
 end
 
 function Math.toanglesyx(v)
