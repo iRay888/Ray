@@ -115,16 +115,18 @@ local function bulletcheck(o, t, p)
     local ve = t - o
     local h, po = Math.raycast(workspace, Ray.new(o, ve), {workspace.Players, workspace.Camera, workspace.Ignore})
 
-    if h and h.CanCollide and h.Transparency == 0 and h.Name ~= "Window" then
-        local n = ve.Unit
-        local e = h.Size.Magnitude * n
-        local nh, dp = Math.wraycast(workspace, Ray.new(po + e, -e), {h})
-        local m = (dp - po).Magnitude
+    if h then
+        if h.CanCollide and h.Transparency == 0 and h.Name ~= "Window" then
+            local n = ve.Unit
+            local e = h.Size.Magnitude * n
+            local nh, dp = Math.wraycast(workspace, Ray.new(po + e, -e), {h})
+            local m = (dp - po).Magnitude
 
-        if m >= p then
-            return false
-        else
-            p = p - m
+            if m >= p then
+                return false
+            else
+                p = p - m
+            end
         end
 
         return bulletcheck(po + n / 100, t, p)
