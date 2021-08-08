@@ -108,7 +108,7 @@ local function solve(a, b, c, d, e)
 end
 Math.solve = solve
 
-local function bulletcheck(o, t, p)
+local function bulletcheck(o, t, p) -- go away
     if p <= 0.01 then
         return false
     end
@@ -138,7 +138,7 @@ Math.bulletcheck = bulletcheck
 
 local a = 90 / 3
 local b = 90 / 4
-local function scanplayer(c, d)
+local function scanplayer(c, d, e) -- :P
     for p = 1, 3 do
         p = (p - 1) * a
         local cf = c * CFrame.Angles(0, math.rad(p), 0)
@@ -157,18 +157,30 @@ local function scanplayer(c, d)
             }
 
             for u = 1, 4 do
-                u = u * 4.85
+                u = u * 4.87
 
                 for o = 1, #zchecks do
                     o = zchecks[o]
-                    d((o * CFrame.new(0, 0, -u)).Position)
-                    d((o * CFrame.new(0, 0, u)).Position)
+                    for i, v in pairs({
+                        (o * CFrame.new(0, 0, -u)).Position,
+                        (o * CFrame.new(0, 0, u)).Position
+                    }) do
+                        if bulletcheck(v, d, e) then
+                            return v
+                        end
+                    end
                 end
 
                 for o = 1, #xchecks do
                     o = xchecks[o]
-                    d((o * CFrame.new(-u, 0, 0)).Position)
-                    d((o * CFrame.new(u, 0, 0)).Position)
+                    for i, v in pairs({
+                        (o * CFrame.new(-u, 0, 0)).Position,
+                        (o * CFrame.new(u, 0, 0)).Position
+                    }) do
+                        if bulletcheck(v, d, e) then
+                            return v
+                        end
+                    end
                 end
             end
         end
@@ -176,7 +188,7 @@ local function scanplayer(c, d)
 end
 Math.scanplayer = scanplayer
 
-function Math.minpos(t)
+function Math.minpos(t) -- list
     for i, v in pairs(t) do
         if v and v >= 0 then
             return v
@@ -184,7 +196,7 @@ function Math.minpos(t)
     end
 end
 
-function Math.timehit(o, ve, a, t)
+function Math.timehit(o, ve, a, t) -- origin, velocity, acceleration, target
 	local d = o - t
 	local st = 0
 	local n = (1 / 0)
@@ -201,7 +213,7 @@ function Math.timehit(o, ve, a, t)
 	return st, n
 end
 
-function Math.trajectory(o, a, t, s)
+function Math.trajectory(o, a, t, s) -- origin, acceleration, target, speed
 	local ve = t - o
 	local b = -a
 
@@ -212,7 +224,7 @@ function Math.trajectory(o, a, t, s)
     end
 end
 
-function Math.old_trajectory(pp, pv, pa, tp, tv, ta, s)
+function Math.old_trajectory(pp, pv, pa, tp, tv, ta, s) -- origin, addition offset, acceleration, target, addition, accel offset, speed
     local rp = tp - pp
     local rv = tv - pv
     local ra = ta - pa
@@ -224,7 +236,7 @@ function Math.old_trajectory(pp, pv, pa, tp, tv, ta, s)
     end
 end
 
-function Math.simple_trajectory(s, a, r)
+function Math.simple_trajectory(s, a, r) -- speed, acceleration, direction
     local a0 = 4 * Math.dot(r, r)
     local a1 = -4 * (Math.dot(a, r) + s * s)
     local a2 = Math.dot(a, a)
