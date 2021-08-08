@@ -186,6 +186,8 @@ local function scanplayer(d, e) -- :P
             end
         end
     end
+    
+    return false
 end
 Math.scanplayer = scanplayer
 
