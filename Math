@@ -138,7 +138,8 @@ Math.bulletcheck = bulletcheck
 
 local a = 90 / 3
 local b = 90 / 4
-local function scanplayer(c, d, e) -- :P
+local function scanplayer(d, e) -- :P
+    local c = workspace.Camera.CFrame
     for p = 1, 3 do
         p = (p - 1) * a
         local cf = c * CFrame.Angles(0, math.rad(p), 0)
