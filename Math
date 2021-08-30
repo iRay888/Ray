@@ -112,6 +112,7 @@ local function bulletcheck(o, t, p) -- go away
     if p <= 0.01 then
         return false
     end
+    
     local ve = t - o
     local n = ve.Unit
     local h, po = Math.raycast(workspace, Ray.new(o, ve), {workspace.Players, workspace.CurrentCamera, workspace.Ignore})
@@ -136,52 +137,41 @@ local function bulletcheck(o, t, p) -- go away
 end
 Math.bulletcheck = bulletcheck
 
-local a = 90 / 3
-local b = 90 / 4
-local function scanplayer(d, e) -- :P
-    local c = workspace.Camera.CFrame
-    for p = 1, 3 do
+local a = 90 / 2
+local function scanplayer(s, d, r, e) -- :P
+    local c = CFrame.new(s, d)
+
+    for p = 1, 2 do
         p = (p - 1) * a
         local cf = c * CFrame.Angles(0, math.rad(p), 0)
 
-        for i = 1, 4 do
-            i = i * b
-            local zchecks = {
+        for i = 1, 2 do
+            i = i * a
+            
+            for k, o in pairs({
                 cf,
                 cf * CFrame.Angles(math.rad(i), 0, 0),
-                cf * CFrame.Angles(-math.rad(i), 0, 0),
-            }
-            local xchecks = {
-                cf,
-                cf * CFrame.Angles(0, 0, math.rad(i)),
-                cf * CFrame.Angles(0, 0, -math.rad(i)),
-            }
+                cf * CFrame.Angles(-math.rad(i), 0, 0)
+            }) do
+                local v = (o * CFrame.new(0, 0, -r)).Position
 
-            for u = 1, 4 do
-                u = u * 4.87
-
-                for o = 1, #zchecks do
-                    o = zchecks[o]
-                    for i, v in pairs({
-                        (o * CFrame.new(0, 0, -u)).Position,
-                        (o * CFrame.new(0, 0, u)).Position
-                    }) do
-                        if bulletcheck(v, d, e) then
-                            return v
-                        end
-                    end
+                if bulletcheck(v, d, e) then
+                    return v
                 end
+            end
+            
+            for k, o in pairs({
+                cf,
+                cf * CFrame.Angles(0, 0, -math.rad(i)),
+                cf * CFrame.Angles(0, 0, math.rad(i))
+            }) do
+                local v = (o * CFrame.new(r, 0, 0)).Position
 
-                for o = 1, #xchecks do
-                    o = xchecks[o]
-                    for i, v in pairs({
-                        (o * CFrame.new(-u, 0, 0)).Position,
-                        (o * CFrame.new(u, 0, 0)).Position
-                    }) do
-                        if bulletcheck(v, d, e) then
-                            return v
-                        end
-                    end
+                if bulletcheck(v, d, e) then
+                    return v
+                end
+                if p == 0 then
+                    Part((o * CFrame.new(-r, 0, 0)).Position)
                 end
             end
         end
@@ -191,7 +181,7 @@ local function scanplayer(d, e) -- :P
 end
 Math.scanplayer = scanplayer
 
-function Math.minpos(t) -- list
+function Math.minpos(t)
     for i, v in pairs(t) do
         if v and v >= 0 then
             return v
