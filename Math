@@ -138,7 +138,7 @@ end
 Math.bulletcheck = bulletcheck
 
 local a = 90 / 2
-local function scanplayer(s, d, r, e) -- :P
+local function scanplayer(s, d, r, e) -- fag :P
     local c = CFrame.new(s, d)
 
     for p = 1, 2 do
@@ -171,7 +171,11 @@ local function scanplayer(s, d, r, e) -- :P
                     return v
                 end
                 if p == 0 then
-                    Part((o * CFrame.new(-r, 0, 0)).Position)
+		    local q = (o * CFrame.new(-r, 0, 0)).Position
+		    
+		    if bulletcheck(q, d, e)
+                    	return v
+		    end
                 end
             end
         end
