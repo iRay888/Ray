@@ -174,7 +174,7 @@ local function scanplayer(s, d, r, e) -- fag :P
 		    local q = (o * CFrame.new(-r, 0, 0)).Position
 		    
 		    if bulletcheck(q, d, e) then
-                    	return v
+                    	return q
 		    end
                 end
             end
