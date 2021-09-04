@@ -1,4 +1,5 @@
 local Math = {
+    physicsignore = {workspace.Players, workspace.CurrentCamera, workspace.Ignore},
     raycast = workspace.FindPartOnRayWithIgnoreList,
     wraycast = workspace.FindPartOnRayWithWhitelist,
     tau = 2 * 3.141592653589793,
@@ -115,7 +116,7 @@ local function bulletcheck(o, t, p) -- go away
     
     local ve = t - o
     local n = ve.Unit
-    local h, po = Math.raycast(workspace, Ray.new(o, ve), {workspace.Players, workspace.CurrentCamera, workspace.Ignore})
+    local h, po = Math.raycast(workspace, Ray.new(o, ve), Math.physicsignore)
 
     if h then
         if h.CanCollide and h.Transparency == 0 and h.Name ~= "Window" then
