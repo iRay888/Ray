@@ -1,5 +1,5 @@
 local Math = {
-    physicsignore = {workspace.Players, workspace.CurrentCamera, workspace.Ignore},
+    physicsignore = {workspace:FindFirstChild("Players"), workspace.CurrentCamera, workspace:FindFirstChild("Ignore")},
     raycast = workspace.FindPartOnRayWithIgnoreList,
     wraycast = workspace.FindPartOnRayWithWhitelist,
     tau = 2 * 3.141592653589793,
