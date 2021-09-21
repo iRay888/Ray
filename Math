@@ -155,7 +155,7 @@ local function scanplayer(s, d, r, e, j) -- origin, target, radius, penetrationd
             }) do
                 local v = (o * CFrame.new(0, 0, -r)).Position
 
-                if bulletcheck(v, d, e) and (not j or Math.vischeck(s, (CFrame.new(s, v) * CFrame.new(0, 0, -j)).Position) then
+                if bulletcheck(v, d, e) and (not j or Math.vischeck(s, (CFrame.new(s, v) * CFrame.new(0, 0, -j)).Position)) then
                     return v
                 end
             end
@@ -167,13 +167,13 @@ local function scanplayer(s, d, r, e, j) -- origin, target, radius, penetrationd
             }) do
                 local v = (o * CFrame.new(r, 0, 0)).Position
 
-                if bulletcheck(v, d, e) and (not j or Math.vischeck(s, (CFrame.new(s, v) * CFrame.new(0, 0, -j)).Position) then
+                if bulletcheck(v, d, e) and (not j or Math.vischeck(s, (CFrame.new(s, v) * CFrame.new(0, 0, -j)).Position)) then
                     return v
                 end
                 if p == 0 then
 		            local q = (o * CFrame.new(-r, 0, 0)).Position
 		    
-		            if bulletcheck(q, d, e) and (not j or Math.vischeck(s, (CFrame.new(s, v) * CFrame.new(0, 0, -j)).Position) then
+		            if bulletcheck(q, d, e) and (not j or Math.vischeck(s, (CFrame.new(s, v) * CFrame.new(0, 0, -j)).Position)) then
                     	return q
 		            end
                 end
