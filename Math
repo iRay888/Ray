@@ -195,7 +195,7 @@ end -- returns the smallest number
 
 function Math.vischeck(o, p) -- origin, target
     local Distance = (o - p).Magnitude
-    return GetService.Workspace:FindPartOnRayWithIgnoreList(Ray.new(o, p - o), Math.physicsignore) == nil
+    return workspace:FindPartOnRayWithIgnoreList(Ray.new(o, p - o), Math.physicsignore) == nil
 end -- returns if anything is between the positions
 
 function Math.timehit(o, ve, a, t) -- origin, velocity, acceleration, target
