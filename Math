@@ -214,7 +214,7 @@ local function scanplayerwithtpr(s, d, r, e, j) -- origin, target, scan radius, 
                 cf * CFrame.Angles(0, 0, math.rad(i))
             }) do
                 local m = Math.closestvisiblepos(s, (o * CFrame.new(j, 0, 0)).Position)
-                local v = (m * CFrame.new(r + ((s - m).Magnitude)), 0, 0)).Position
+                local v = (m * CFrame.new(r + ((s - m).Magnitude), 0, 0)).Position
 
                 if bulletcheck(v, d, e) then
                     return v, m
