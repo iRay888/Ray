@@ -138,7 +138,7 @@ local function bulletcheck(o, t, p) -- origin, target, penetrationdepth
 end -- returns if the bullet passed
 Math.bulletcheck = bulletcheck
 
-local function scanplayer(s, d, r, e, j) -- origin, target, radius, penetrationdepth, tp position
+local function scanplayer(s, d, r, e) -- origin, target, radius, penetrationdepth
     local c = CFrame.new(s, d)
 
     for p = 1, 2 do
@@ -155,7 +155,7 @@ local function scanplayer(s, d, r, e, j) -- origin, target, radius, penetrationd
             }) do
                 local v = (o * CFrame.new(0, 0, -r)).Position
 
-                if (not j or Math.vischeck(s, (CFrame.new(s, v) * CFrame.new(0, 0, -j)).Position)) and bulletcheck(v, d, e) then
+                if bulletcheck(v, d, e) then
                     return v
                 end
             end
@@ -167,15 +167,15 @@ local function scanplayer(s, d, r, e, j) -- origin, target, radius, penetrationd
             }) do
                 local v = (o * CFrame.new(r, 0, 0)).Position
 
-                if (not j or Math.vischeck(s, (CFrame.new(s, v) * CFrame.new(0, 0, -j)).Position)) and bulletcheck(v, d, e) then
+                if bulletcheck(v, d, e) then
                     return v
                 end
                 if p == 0 then
-		    local q = (o * CFrame.new(-r, 0, 0)).Position
+                    local q = (o * CFrame.new(-r, 0, 0)).Position
 
-		    if (not j or Math.vischeck(s, (CFrame.new(s, v) * CFrame.new(0, 0, -j)).Position)) and bulletcheck(q, d, e) then
+                    if bulletcheck(q, d, e) then
                     	return q
-		    end
+		            end
                 end
             end
         end
@@ -184,6 +184,56 @@ local function scanplayer(s, d, r, e, j) -- origin, target, radius, penetrationd
     return false
 end -- returns a firepos
 Math.scanplayer = scanplayer
+
+local function scanplayerwithtpr(s, d, r, e, j) -- origin, target, scan radius, penetrationdepth, max tp radius
+    local c = CFrame.new(s, d)
+
+    for p = 1, 2 do
+        p = (p - 1) * 45
+        local cf = c * CFrame.Angles(0, math.rad(p), 0)
+
+        for i = 1, 2 do
+            i = i * 45
+            
+            for k, o in pairs({
+                cf,
+                cf * CFrame.Angles(math.rad(i), 0, 0),
+                cf * CFrame.Angles(-math.rad(i), 0, 0)
+            }) do
+                local m = Math.closestvisiblepos(s, (o * CFrame.new(0, 0, -j)).Position)
+                local v = (m * CFrame.new(0, 0, -r)).Position
+
+                if bulletcheck(v, d, e) then
+                    return v, m
+                end
+            end
+            
+            for k, o in pairs({
+                cf,
+                cf * CFrame.Angles(0, 0, -math.rad(i)),
+                cf * CFrame.Angles(0, 0, math.rad(i))
+            }) do
+                local m = Math.closestvisiblepos(s, (o * CFrame.new(j, 0, 0)).Position)
+                local v = (m * CFrame.new(r, 0, 0)).Position
+
+                if bulletcheck(v, d, e) then
+                    return v, m
+                end
+                if p == 0 then
+                    local mm = Math.closestvisiblepos(s, (o * CFrame.new(-j, 0, 0)).Position)
+		            local q = (mm * CFrame.new(-r, 0, 0)).Position
+
+		            if bulletcheck(q, d, e) then
+                    	return q, mm
+		            end
+                end
+            end
+        end
+    end
+    
+    return false
+end -- returns a firepos and a visible pos in the radius
+Math.scanplayerwithtpr = scanplayerwithtpr
 
 function Math.minpos(t) -- list
     for i, v in pairs(t) do
@@ -194,9 +244,13 @@ function Math.minpos(t) -- list
 end -- returns the smallest number
 
 function Math.vischeck(o, p) -- origin, target
-    local Distance = (o - p).Magnitude
     return workspace:FindPartOnRayWithIgnoreList(Ray.new(o, p - o), Math.physicsignore) == nil
 end -- returns if anything is between the positions
+
+function Math.closestvisiblepos(o, p) -- origin, target
+    local h, p = workspace:FindPartOnRayWithIgnoreList(Ray.new(o, p - o), Math.physicsignore)
+    return p
+end -- returns the closest visible position between the arguments
 
 function Math.timehit(o, ve, a, t) -- origin, velocity, acceleration, target
 	local d = o - t
