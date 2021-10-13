@@ -140,7 +140,7 @@ Math.bulletcheck = bulletcheck
 
 local function farthestpoint(o, ve, p) -- origin, velocity, penetrationdepth
     if p <= 0.01 then
-        return false
+        return o
     end
     
     local n = ve.Unit
@@ -153,7 +153,7 @@ local function farthestpoint(o, ve, p) -- origin, velocity, penetrationdepth
             local m = (dp - po).Magnitude
 
             if m >= p then
-                return false
+                return po
             else
                 p = p - m
             end
@@ -163,7 +163,7 @@ local function farthestpoint(o, ve, p) -- origin, velocity, penetrationdepth
     end
 
     return o + ve
-end -- returns if the bullet passed
+end -- returns the farthest point the bullet will go
 Math.farthestpoint = farthestpoint
 
 local function scanplayer(s, d, r, e) -- origin, target, radius, penetrationdepth
