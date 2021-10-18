@@ -275,9 +275,31 @@ function Math.vischeck(o, p) -- origin, target
     return workspace:FindPartOnRayWithIgnoreList(Ray.new(o, p - o), Math.physicsignore) == nil
 end -- returns if anything is between the positions
 
-function Math.closestvisiblepos(o, p) -- origin, target
-    local h, p = workspace:FindPartOnRayWithIgnoreList(Ray.new(o, p - o), Math.physicsignore)
-    return p
+function Math.closestvisiblepos(o, t) -- origin, target
+    local cf = CFrame.new(o, t)
+    local d = (o - t).Magnitude
+    local f = math.huge
+    local os = {
+        cf,
+        cf * CFrame.new(Vector3.new(0.25, 0.25, 0)),
+        cf * CFrame.new(Vector3.new(-0.25, 0.25, 0)),
+        cf * CFrame.new(Vector3.new(0.25, -0.25, 0)),
+        cf * CFrame.new(Vector3.new(-0.25, -0.25, 0))
+    }
+
+    for i, v in pairs(os) do
+        local o0 = v.Position
+        local t0 = (v * CFrame.new(0, 0, -d)).Position
+        local _, t1 = workspace:FindPartOnRayWithIgnoreList(Ray.new(o0, t0 - o0), Math.physicsignore)
+        local d0 = (o0 - t1).Magnitude
+
+        if d - d0 > 0.1 and d0 < f then
+            t = (cf * CFrame.new(0, 0, -d0 + 0.5)).Position
+            f = d0
+        end
+    end
+
+    return t
 end -- returns the closest visible position between the arguments
 
 function Math.timehit(o, ve, a, t) -- origin, velocity, acceleration, target
