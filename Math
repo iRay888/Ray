@@ -229,7 +229,7 @@ local function scanplayerwithtpr(s, d, r, e, j) -- origin, target, scan radius, 
                 cf * CFrame.Angles(-math.rad(i), 0, 0)
             }) do
                 local m = Math.closestvisiblepos(s, (o * CFrame.new(0, 0, -j)).Position)
-                local v = (o * CFrame.new(0, 0, -r - ((s - m).Magnitude - 0.1))).Position
+                local v = (o * CFrame.new(0, 0, -r - ((s - m).Magnitude - 0.3))).Position
 
                 if bulletcheck(v, d, e) then
                     return v, m
@@ -242,14 +242,14 @@ local function scanplayerwithtpr(s, d, r, e, j) -- origin, target, scan radius, 
                 cf * CFrame.Angles(0, 0, math.rad(i))
             }) do
                 local m = Math.closestvisiblepos(s, (o * CFrame.new(j, 0, 0)).Position)
-                local v = (o * CFrame.new(r + ((s - m).Magnitude - 0.1), 0, 0)).Position
+                local v = (o * CFrame.new(r + ((s - m).Magnitude - 0.3), 0, 0)).Position
 
                 if bulletcheck(v, d, e) then
                     return v, m
                 end
                 if p == 0 then
                     local mm = Math.closestvisiblepos(s, (o * CFrame.new(-j, 0, 0)).Position)
-		            local q = (o * CFrame.new(-r - ((s - mm).Magnitude - 0.1), 0, 0)).Position
+		            local q = (o * CFrame.new(-r - ((s - mm).Magnitude - 0.3), 0, 0)).Position
 
 		            if bulletcheck(q, d, e) then
                     	return q, mm
@@ -297,15 +297,21 @@ function Math.timehit(o, ve, a, t) -- origin, velocity, acceleration, target
 	return st, n
 end -- returns the time for the bullet to hit and the distance
 
-function Math.trajectory(o, a, t, s) -- origin, acceleration, target, speed
-	local ve = t - o
-	local b = -a
+function Math.trajectory(o, a, t, s, e) -- origin, acceleration, target, speed, offset 
+    local f = -a
+    local ld = t - o
+    local a = Math.dot(f, f)
+    local b = 4 * Math.dot(ld, ld)
+    local k = (4 * (Math.dot(f, ld) + s * s)) / (2 * a)
+    local v = (k * k - b / a) ^ 0.5
+    local t, t0 = k - v, k + v
 
-    for i, v in pairs({solve(Math.dot(b, b) / 4, 0, Math.dot(b, ve) - s * s, 0, Math.dot(ve, ve))}) do
-        if v and v > 0 then
-            return b * v / 2 + ve / v, v
-        end
+    if not (t > 0) then
+        t = t0
     end
+
+    t = t ^ 0.5
+    return f * t / 2 + (e or Math.v3) + ld / t, t
 end -- returns the trajectory velocity
 
 function Math.old_trajectory(pp, pv, pa, tp, tv, ta, s) -- origin, addition offset, acceleration, target, addition, accel offset, speed
