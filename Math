@@ -272,8 +272,26 @@ function Math.minpos(t) -- list
     end
 end -- returns the smallest number
 
-function Math.vischeck(o, p) -- origin, target
-    return workspace:FindPartOnRayWithIgnoreList(Ray.new(o, p - o), Math.physicsignore) == nil
+function Math.vischeck(o, t) -- origin, target
+    local cf = CFrame.new(o, t)
+    local d = (o - t).Magnitude
+    local os = {
+        cf * CFrame.new(Vector3.new(0.3, 0.3, -0.3)),
+        cf * CFrame.new(Vector3.new(-0.3, 0.3, -0.3)),
+        cf * CFrame.new(Vector3.new(0.3, -0.3, -0.3)),
+        cf * CFrame.new(Vector3.new(-0.3, -0.3, -0.3))
+    }
+
+    for i, v in pairs(os) do
+        local o0 = v.Position
+        local t0 = (v * CFrame.new(0, 0, -d)).Position
+
+        if workspace:FindPartOnRayWithIgnoreList(Ray.new(o0, t0 - o0), Math.physicsignore) ~= nil then
+            return false
+        end
+    end
+
+    return true
 end -- returns if anything is between the positions
 
 function Math.closestvisiblepos(o, t) -- origin, target
