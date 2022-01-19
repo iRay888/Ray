@@ -3,20 +3,20 @@ local globalchat = localplayer.PlayerGui.ChatGame.GlobalChat
 local lastchat = 0
 local messages = {
     blessings = {
-        "And my God will supply every need of yours @@NAME@@, according to his riches in glory in Christ Je 𐌇 sus. Philippians 4:19",
+        "And my God will supply every need of yours @@NAME@@, according to his riches in glory in Christ Je 𐌢 sus. Philip 𐌢 pians 4:19",
         "Beloved, I pray that all may go well with you @@NAME@@, and that you may be in good health, as it goes well with your soul. 3 John 1:2",
         "@@NAME@@ when a man's ways please the Lord, he makes even his enemies to be at peace with him. Proverbs 16:7",
-        "And the peace of God, which surpasses all understanding, will guard @@NAME@@'s hearts and your mind in Christ Je 𐌇 sus. Philippians 4:7",
-        "For it is God who works in you @@NAME@@, both to will and to work for his good pleasure. Philippians 2:13",
+        "And the peace of God, which surpasses all understanding, will guard @@NAME@@'s hearts and your mind in Christ Je 𐌢 sus. Philip 𐌢 pians 4:7",
+        "For it is God who works in you @@NAME@@, both to will and to work for his good pleasure. Philip 𐌢 pians 2:13",
         "@@NAME@@ blessed are those who mourn, for they will be comforted. Matthew 5:4",
         "May God bless @@NAME@@ still, so that all the ends of the earth will fear him. Psalm 67:7",
-        "Do not be anxious about anything @@NAME@@, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. Philippians 4:6",
+        "Do not be anxious about anything @@NAME@@, but in every situation, by prayer and petition, with thanksgiving, present your requests to God. Philip 𐌢 pians 4:6",
         "Every good and perfect gift is from above @@NAME@@, coming down from the Father of the heavenly lights, who does not change like shifting shadows. James 1:17",
         "@@NAME@@ blessed is the one who trusts in the Lord, whose confidence is in him. Jeremiah 17:7",
         "But do not fear @@NAME@@, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand. Isaiah 41:10",
         "Out of his fullness we have all received grace in place of grace already given, @@NAME@@. John 1:16",
         "And God is able to bless you abundantly @@NAME@@, so that in all things at all times, having all that you need, you will abound in every good work. 2 Corinthians 9:8",
-        "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Je 𐌇 sus @@NAME@@. Philippians 4:7"
+        "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Je 𐌢 sus @@NAME@@. Philip 𐌢 pians 4:7"
     },
     verses = {
         "Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge him, and he will make straight your paths. Proverbs 3:5-6",
@@ -26,7 +26,7 @@ local messages = {
         "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you. James 1:5",
         "For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope. Jeremiah 29:11",
         "Rejoice in hope, be patient in tribulation, be constant in prayer. Romans 12:12",
-        'Je 𐌇 sus said to him, "I am the way, and the truth, and the life. No one comes to the Father except through me." - John 14:6'
+        'Je 𐌢 sus said to him, "I am the way, and the truth, and the life. No one comes to the Father except through me." - John 14:6'
     }
 }
 
